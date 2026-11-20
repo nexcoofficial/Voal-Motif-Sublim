@@ -262,15 +262,32 @@ const lab=r=>norm((r.querySelector('.oo-variation-label')||{}).textContent);
 function find(rs,name){const k=norm(name);let h=rs.filter(r=>lab(r)===k);if(h.length===1)return h[0];
  h=rs.filter(r=>lab(r).startsWith(k));if(h.length===1)return h[0];
  h=rs.filter(r=>lab(r).includes(k));if(h.length===1)return h[0];return null}
-function syncForm(){const rs=rows();if(!rs.length)return false;
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+let syncing=false;
+function syncStatic(){const rs=rows();
  const want=new Map();sel.forEach(n=>{const r=find(rs,n);if(r)want.set(r,1)});
  rs.forEach(r=>{const inp=r.querySelector('input.oo-combination');if(!inp)return;const now=parseInt(inp.value)||0;
   const target=want.has(r)?Math.max(now,1):0;const btn=r.querySelector(target>now?'.oo-variation-qty-plus':'.oo-variation-qty-minus');if(!btn)return;
   for(let k=0;k<Math.abs(target-now);k++)btn.click()});return true}
+function pickOpt(s,name){const k=norm(name),o=[...s.options];let h=o.filter(x=>norm(x.text)===k);if(h.length===1)return h[0];
+ h=o.filter(x=>norm(x.text).startsWith(k));if(h.length===1)return h[0];
+ h=o.filter(x=>norm(x.text).includes(k));if(h.length===1)return h[0];return null}
+async function syncDynamic(){const names=[...sel];if(!names.length)return true;
+ const add=()=>document.querySelector('.oo-variation-add-row');
+ while(rows().length>names.length){const rm=rows()[rows().length-1].querySelector('.oo-variation-remove-row');if(!rm)break;const n=rows().length;rm.click();await wait(150);if(rows().length===n)break}
+ while(rows().length<names.length){const b=add();if(!b)break;const n=rows().length;b.click();await wait(250);if(rows().length===n)break}
+ const R=rows();
+ for(let i=0;i<R.length&&i<names.length;i++){const r=R[i],s=r.querySelector('select.oo-variation-select'),inp=r.querySelector('input.oo-combination');if(!s||!inp)continue;
+  const o=pickOpt(s,names[i]);
+  if(o&&s.value!==o.value){if(window.jQuery)window.jQuery(s).val(o.value).trigger('change');else{s.value=o.value;s.dispatchEvent(new Event('change',{bubbles:true}))}await wait(200)}
+  if((parseInt(inp.value)||0)<1){const p=r.querySelector('.oo-variation-qty-plus');if(p){p.click();await wait(120)}}}
+ return true}
+async function syncForm(){if(syncing)return false;if(!rows().length)return false;syncing=true;
+ try{return document.querySelector('.ooef-variations-table select.oo-variation-select')?await syncDynamic():syncStatic()}finally{syncing=false}}
 const go=()=>$('#order').scrollIntoView({behavior:'smooth',block:'start'});
-$('#pesan').onclick=()=>{if(!sel.size){$('#sw').scrollIntoView({behavior:'smooth',block:'start'});$('#pst').innerHTML='<b>Pilih motif dulu</b>Ketuk minimal satu motif';return}syncForm();go()};
+$('#pesan').onclick=async()=>{if(!sel.size){$('#sw').scrollIntoView({behavior:'smooth',block:'start'});$('#pst').innerHTML='<b>Pilih motif dulu</b>Ketuk minimal satu motif';return}await syncForm();go()};
 $('#cta').onclick=()=>$('#pilih').scrollIntoView({behavior:'smooth',block:'start'});
-$('#barbtn').onclick=()=>{if(sel.size){syncForm();go()}else $('#pilih').scrollIntoView({behavior:'smooth',block:'start'})};
+$('#barbtn').onclick=async()=>{if(sel.size){await syncForm();go()}else $('#pilih').scrollIntoView({behavior:'smooth',block:'start'})};
 const bar=$('#bar');let inOrder=false;
 new IntersectionObserver(es=>{es.forEach(e=>{inOrder=e.isIntersecting});upd()},{threshold:0}).observe($('#orderSec'));
 function upd(){bar.classList.toggle('show',!inOrder&&window.scrollY>300)}
