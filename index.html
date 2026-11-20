@@ -125,15 +125,17 @@ details p{padding:0 0 14px;color:var(--mut);font-size:14.5px}
 
 .rv{border-top:1px solid var(--ln);padding:14px 0}
 .rv:first-child{border-top:0}
-.rv .st{color:#c9892b;letter-spacing:2px;font-size:14px}
+.rv .st{color:var(--y);letter-spacing:2px;font-size:14px}
 .rv .meta{font-size:12.5px;color:var(--mut);margin:2px 0 6px}
 .rv p{font-size:15px}
 .rv .ph2{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
 .rv .ph2 button{width:72px;height:72px;padding:0;background:#eadfd6}
 .rv .ph2 img{width:100%;height:100%;object-fit:cover}
-.rvh{display:flex;align-items:baseline;gap:10px;margin:2px 0 4px}
-.rvh b{font-size:30px;font-weight:800;letter-spacing:-.02em}
-.rvh span{font-size:13px;color:var(--mut)}
+.rvh{background:#fcf4f1;border:1px solid #ecd9d4;padding:18px 14px 16px;text-align:center;margin:6px 0 4px}
+.rvh .big{font-size:34px;font-weight:400;color:var(--y);line-height:1.1}
+.rvh .big small{font-size:17px;color:var(--y)}
+.rvh .stars{color:var(--y);font-size:26px;letter-spacing:3px;line-height:1.3;margin-top:4px}
+.rvh .cnt2{font-size:13px;color:var(--mut);margin-top:2px}
 .src{font-size:12px;color:var(--mut);margin-top:10px}
 #lb{position:fixed;inset:0;background:rgba(29,26,23,.92);display:none;align-items:center;justify-content:center;z-index:50;padding:14px}
 #lb.on{display:flex}
@@ -206,7 +208,7 @@ h1,.blk h2,.ord h2,.facts b,.step b{font-style:italic}
     <div class="row"><span>Pilihan</span><span>70 motif dan warna</span></div>
   </section>
 
-  <section class="blk" id="rev"><h2>Ulasan pembeli</h2><div class="rvh"><b id="rvr"></b><span id="rvn"></span></div><div id="revl"></div><p class="src">Ulasan asli dari pembeli di Shopee.</p></section>
+  <section class="blk" id="rev"><h2>Ulasan pembeli</h2><div class="rvh"><div class="big"><span id="rvr"></span> <small>dari 5</small></div><div class="stars" aria-hidden="true">★★★★★</div><div class="cnt2" id="rvn"></div></div><div id="revl"></div><p class="src">Ulasan asli dari pembeli di Shopee.</p></section>
 <div id="lb" role="dialog" aria-label="Foto ulasan"><img alt=""></div>
 
   <section class="blk">
@@ -255,7 +257,7 @@ if(CFG.price>0){$('#pnow').textContent=rp(CFG.price);$('#barprice').textContent=
 else{$('#price').style.display='none';$('#barprice').textContent='70 motif';document.querySelector('.ordsel b').style.display='none'}
 $('#sub').innerHTML='<span><b>★ '+CFG.rating+'</b> ('+CFG.reviews+' penilaian)</span><span><b>'+CFG.sold+'</b> terjual</span>';
 if(REVIEWS.length)$('#rev').style.display='block';
-if(REVIEWS.length){$('#rvr').textContent=CFG.rating+' / 5';$('#rvn').textContent='dari '+CFG.reviews+' penilaian';
+if(REVIEWS.length){$('#rvr').textContent=CFG.rating.replace(',','.');$('#rvn').textContent=CFG.reviews+' penilaian';
  const bl=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];const L=$('#revl');const lb=$('#lb');
  REVIEWS.forEach(r=>{const d=document.createElement('div');d.className='rv';const p=r.d.split('-');
   d.innerHTML='<div class="st" aria-label="5 dari 5 bintang">★★★★★</div><div class="meta"></div><p></p><div class="ph2"></div>';
