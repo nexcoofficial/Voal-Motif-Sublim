@@ -122,6 +122,22 @@ details p{padding:0 0 14px;color:var(--mut);font-size:14.5px}
 .ooef form .checkout-actions .btn-complete-order svg{width:20px;height:20px}
 .ooef .oo-hl,.ooef tr.oo-hl{background:#f4dde3!important}
 
+
+.rv{border-top:1px solid var(--ln);padding:14px 0}
+.rv:first-child{border-top:0}
+.rv .st{color:#c9892b;letter-spacing:2px;font-size:14px}
+.rv .meta{font-size:12.5px;color:var(--mut);margin:2px 0 6px}
+.rv p{font-size:15px}
+.rv .ph2{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.rv .ph2 button{width:72px;height:72px;padding:0;background:#eadfd6}
+.rv .ph2 img{width:100%;height:100%;object-fit:cover}
+.rvh{display:flex;align-items:baseline;gap:10px;margin:2px 0 4px}
+.rvh b{font-family:var(--serif);font-size:34px;font-style:italic}
+.rvh span{font-size:13px;color:var(--mut)}
+.src{font-size:12px;color:var(--mut);margin-top:10px}
+#lb{position:fixed;inset:0;background:rgba(29,26,23,.92);display:none;align-items:center;justify-content:center;z-index:50;padding:14px}
+#lb.on{display:flex}
+#lb img{max-width:100%;max-height:100%;object-fit:contain}
 #order{scroll-margin-top:12px}
 footer{padding:22px 0 8px;text-align:center;font-size:12px;color:#9d9486}
 .bar{position:fixed;left:0;right:0;bottom:0;background:var(--bg);border-top:2px solid var(--ink);padding:9px 14px;display:flex;gap:12px;align-items:center;justify-content:center;transform:translateY(110%);transition:transform .25s;z-index:20}
@@ -189,7 +205,8 @@ h1,.blk h2,.ord h2,.facts b,.step b{font-style:italic}
     <div class="row"><span>Pilihan</span><span>70 motif dan warna</span></div>
   </section>
 
-  <section class="blk" id="rev"><h2>Ulasan</h2><div id="revl"></div></section>
+  <section class="blk" id="rev"><h2>Ulasan pembeli</h2><div class="rvh"><b id="rvr"></b><span id="rvn"></span></div><div id="revl"></div><p class="src">Ulasan asli dari pembeli di Shopee.</p></section>
+<div id="lb" role="dialog" aria-label="Foto ulasan"><img alt=""></div>
 
   <section class="blk">
     <h2>Cara pesan</h2>
@@ -227,7 +244,7 @@ h1,.blk h2,.ord h2,.facts b,.step b{font-style:italic}
 <script>
 const CDN='https://down-id.img.susercontent.com/file/';
 const CFG={price:135000,was:190000,rating:'4,9',reviews:'8RB',sold:'10RB+'};
-const REVIEWS=[];
+const REVIEWS=[{"d": "2026-02-09", "v": "Bunga Abstrak Brown", "t": "Keknya pen co lagi, motifnya cakep bgt. Bahannya lagi ga nerawang luv deh", "i": ["8224y-mkhly8j14hs224"]}, {"d": "2025-12-12", "v": "Aruna Gray Nude", "t": "Wangi bgt jilbabnya😍 cantiksih motifnya next beli corak lain lagi", "i": ["8224o-mi60gubx1wjo1d", "8224u-mi60gvl69n9efd", "8224o-mi60gsgodyio09", "8224r-mi60gup9pyisd6"]}, {"d": "2026-05-08", "v": "Siren Soft Pink", "t": "Bahan nya ringan super gampang di bentuk. Motif nya cutsyyy … ternyata super nyaman dipake dibentuknya gampang … pengirimannya cepat juga", "i": ["822wl-mnzhizfhwd8h5b", "822wq-mnzhizfbcdtxe1", "822wq-mnzhizfhuyo1f1"]}, {"d": "2026-02-15", "v": "Lottie Maroon, Tulip Gray Nude", "t": "Jilbabnya gampang dibentuk, ga mleyot, langsung setrika trus pakai, baru unboxing wangi banget", "i": ["8224w-mkq9181asjk19e", "8224q-mkq91812abraa1"]}, {"d": "2026-04-06", "v": "Tulip Soft Brown", "t": "Kain halus adem. Desain elegan buat seragam keluarga, motif kalem ga terlalu nyolok tp tetap on. Pertahankan kualitasnya kak", "i": ["822wo-mmpl02yk3j7qdf", "822wg-mmpl5l3a1q1475"]}, {"d": "2026-09-04", "v": "Aruna Dusty Pink, Brown", "t": "Kain gak tipis gak tebal gak licin. Nyaman banget gak gampang mlorot. Desain elegan bisa untuk acara formal atau nonformal. Bagus banget harga worth it", "i": ["81ztk-msp3cmoamgp51f", "81ztn-msp3cmo3wv0m4d", "81ztd-msp3cmo3y9l274"]}, {"d": "2026-01-01", "v": "", "t": "Bahan bagus adem, tekstur halus. Sangat puas beli kerudung disini, motifnya bagus netral dipake ke semua warna baju", "i": ["82252-mixv21s5y7ltc6"]}, {"d": "2026-02-11", "v": "", "t": "Hijab voal nya sudah dateng sesuai orderan. Pengirimannya aman dan cepat. Harga terjangkau, bahannya bagus, mudah dibentuk, nyaman dipake ga licin-licin. Corak atau perpaduan warnanya cantik", "i": []}];
 const GAL=["images/voal-sublim-01.webp", "https://down-id.img.susercontent.com/file/id-11134207-8224p-mgd2wwcmzsay2b.webp", "images/voal-sublim-05.webp", "images/voal-sublim-02.webp", "images/voal-sublim-03.webp", "images/voal-sublim-04.webp", "images/voal-sublim-06.webp", "images/voal-sublim-07.webp"];
 const COLORS=[["Tulip Gray Nude", "id-11134207-8224r-mgd2wwcn16ve6c"], ["Tulip Nude Pink", "id-11134207-8224w-mgdg6uf8ffgs33"], ["Tulip Soft Brown", "id-11134207-8224t-mgdg6ufcbw993f"], ["Aruna Brown", "id-11134207-8224u-mgdg6ufcdatp02"], ["Aruna Gray Nude", "id-11134207-8224w-mgdg6ufcg3ylb9"], ["Aruna Maroon", "id-11134207-8224w-mgdg6ufchij18d"], ["Aruna Stone Blue", "id-11134207-8224t-mgdg6ufcix3h2c"], ["Bunga Abstrak Brown", "id-11134207-82252-mgdg6ufckbnxf7"], ["Bunga Abstrak Nude Gray", "id-11134207-8224x-mgdg6ufcn4stb8"], ["Bunga Abstrak Nude", "id-11134207-82250-mgdga10z4t8s0f"], ["Biloba Gray Nude", "id-11134207-8224w-mgdga10wd2x99e"], ["Biloba Navy", "id-11134207-8224q-mgdga10wehhp0f"], ["Biloba Nude Pink", "id-11134207-8224v-mgdga10wfw25d6"], ["Biloba Soft Brown", "id-11134207-8224x-mgdga10whamlef"], ["Biloba Soft Blue", "id-11134207-822wm-mnwa5r5l3q4jba"], ["Khabirah2", "id-11134207-8224r-mgn2ttpugz6706"], ["Khabirah4", "id-11134207-82252-mgn2ttpujsb3fc"], ["Kizora1", "id-11134207-822wp-mooxs5tn3pqj5c"], ["Kizora2", "id-11134207-8224r-mkemt2036p6wde"], ["Kizora8", "id-11134207-8224v-mkemt205x0xz1f"], ["Siren Soft Pink", "id-11134207-8224u-mhsgxofo6dxicb"], ["Siren Maroon", "id-11134207-8224o-mhsgxofrez297e"], ["Siren Denim", "id-11134207-8224v-mhsgxofrgdmpa3"], ["Siren Navy", "id-11134207-8224s-mhsgxofrhs7537"], ["Siren Peach", "id-11134207-82252-mhsgxofrj6rlcc"], ["Siren Dusty", "id-11134207-8224q-mhsgxofrklc1c2"], ["Ayana Black Blue", "id-11134207-8224r-mhzy25juh2bp3c"], ["Ayana Denim", "id-11134207-8224y-mhzy25k08ydc4a"], ["Ayana Dusty", "id-11134207-8224p-mhzy25k0acxse8"], ["Ayana Nude Pink", "id-11134207-8224v-mhzy25k0bri83b"], ["Ayana Soft Green", "id-11134207-8224r-mhzy25k0d62o88"], ["Ayana Brown Pink", "id-11134207-8224s-mhzy25k0ekn4ce"], ["Ayana Pink Soft", "id-11134207-8224q-mhzy25k0fz7k3c"], ["Ayana Millo", "id-11134207-8224o-midxrm19vr4345"], ["Sakura Soft Yellow", "id-11134207-8224q-midxrm19zytfcf"], ["Lottie Maroon", "id-11134207-8224r-midxu7xi6i9ydc"], ["Lottie Mauve", "id-11134207-8224o-midxu7xi7wue4e"], ["Margin Soft Yellow", "id-11134207-822wk-mooxs5tmpo2458"], ["Nagami1", "id-11134207-822wn-mooxs5tmr2mkfe"], ["Nagami2", "id-11134207-822wj-mmjrw8q0ta0zcc"], ["Nagami5", "id-11134207-822wg-mooxs5tmtvrg45"], ["Nunik2", "id-11134207-822wt-mncletanf8js32"], ["Nunik4", "id-11134207-822wr-mncletaojz0h43"], ["Nunik6", "id-11134207-822wo-mncletaoldkx2f"], ["Nunik7", "id-11134207-822wl-mn9rd98n28skb9"], ["Senja Army", "id-11134207-822wp-mog8nu5x1zpocc"], ["Senja Dark Gray", "id-11134207-822wq-mog8nu5qce1b30"], ["Senja Dark Navy", "id-11134207-822ws-mog8nu5qdslrd3"], ["Senja Gray Denim", "id-11134207-822wg-mog8nu5qglqnd2"], ["Senja Navy", "id-11134207-822wp-mog8nu5qktfz41"], ["Senja Pink", "id-11134207-822wj-mog8nu5qm80fb3"], ["Orchid Brown", "id-11134207-822wm-mooxs5tmwowc5c"], ["Orchid Gray", "id-11134207-822wq-mooxs5tmzi1808"], ["Orchid Nude", "id-11134207-822wg-mooxs5tn0wlo8e"], ["Orchid Cream Butter", "id-11134207-822wr-mnmop4iv4vlw8d"], ["Pelangi Mauve", "id-11134207-822wu-mooybcl0z6kr19"], ["Noir Army", "id-11134207-822wu-mphin3rvzjf3b9"], ["Noir Creamy Dusty", "id-11134207-822wp-mphin3rw2cjzb3"], ["Noir Ivory", "id-11134207-822wl-mphin3rw6k9b4b"], ["Polka green", "id-11134207-822ws-mpxj93kd27ls09"], ["Polka butter", "id-11134207-822wi-mpxjb6t8ftouc6"], ["Rosella Black", "id-11134207-81zti-muhg3jshwwzo2e"], ["Rosella Burgundy", "id-11134207-81zth-muhg3jslp62qbc"], ["Rosella Coksu", "id-11134207-81ztf-muhg3jslqkn6ab"], ["Rosella Milo", "id-11134207-81zti-muhg3jslusci29"], ["Celine Brown", "id-11134207-81ztc-muhg3jslxlhed3"], ["Celine Butter", "id-11134207-81ztm-muhg3jslz01u70"], ["Celine Khaky", "id-11134207-81zti-muhg3jsm0ema01"], ["Celine Mocca", "id-11134207-81ztd-muhg3jsm1t6q37"], ["Celine Nude", "id-11134207-81ztp-muhiyeatmg3k18"]];
 const $=s=>document.querySelector(s);
@@ -237,6 +254,17 @@ if(CFG.price>0){$('#pnow').textContent=rp(CFG.price);$('#barprice').textContent=
 else{$('#price').style.display='none';$('#barprice').textContent='70 motif';document.querySelector('.ordsel b').style.display='none'}
 $('#sub').innerHTML='<span><b>★ '+CFG.rating+'</b> ('+CFG.reviews+' penilaian)</span><span><b>'+CFG.sold+'</b> terjual</span>';
 if(REVIEWS.length)$('#rev').style.display='block';
+if(REVIEWS.length){$('#rvr').textContent=CFG.rating+' / 5';$('#rvn').textContent='dari '+CFG.reviews+' penilaian';
+ const bl=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];const L=$('#revl');const lb=$('#lb');
+ REVIEWS.forEach(r=>{const d=document.createElement('div');d.className='rv';const p=r.d.split('-');
+  d.innerHTML='<div class="st" aria-label="5 dari 5 bintang">★★★★★</div><div class="meta"></div><p></p><div class="ph2"></div>';
+  d.querySelector('.meta').textContent='Pembeli Shopee · '+(+p[2])+' '+bl[+p[1]-1]+' '+p[0]+(r.v?' · '+r.v:'');
+  d.querySelector('p').textContent=r.t;const ph=d.querySelector('.ph2');
+  r.i.forEach(id=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Perbesar foto');const im=new Image();im.width=72;im.height=72;im.alt='';im.loading='lazy';im.referrerPolicy='no-referrer';im.src=CDN+'id-11134103-'+id+'@resize_w450_nl.webp';b.appendChild(im);
+   b.onclick=()=>{const x=lb.querySelector('img');x.referrerPolicy='no-referrer';x.src=CDN+'id-11134103-'+id+'.webp';lb.classList.add('on')};ph.appendChild(b)});
+  L.appendChild(d)});
+ lb.onclick=()=>lb.classList.remove('on')}
+
 const gal=$('#gal'),th=$('#thumbs');
 const rem=u=>u.startsWith('http');const sm=id=>CDN+id+'@resize_w450_nl.webp';
 GAL.forEach((u,i)=>{const d=document.createElement('div');const im=new Image();im.width=900;im.height=900;im.alt='Hijab voal motif sublim foto '+(i+1);if(rem(u))im.referrerPolicy='no-referrer';if(i){im.loading='lazy';im.decoding='async'}else im.fetchPriority='high';im.src=u;d.appendChild(im);gal.appendChild(d);
